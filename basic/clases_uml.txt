@@ -1,0 +1,50 @@
+@startuml
+
+abstract class TicTacToe {
+   #{abstract}createView(): View
+   #play()
+}
+
+class View {
+}
+
+class ConsoleTicTacToe {
+
+}
+
+class Controller {
+   +getColor(coordinate): Color
+}
+
+TicTacToe <|-- ConsoleTicTacToe
+
+TicTacToe *--> Game: game
+TicTacToe *--> View: view
+TicTacToe *--> StartController
+TicTacToe *--> PlayController
+TicTacToe *--> ResumeController
+
+Controller <|-- StartController
+Controller <|-- PlayController
+Controller <|-- ResumeController
+
+Controller --> Game
+
+ConsoleTicTacToe ..> ConsoleView
+
+ConsoleView --> StartController
+ConsoleView --> PlayController
+ConsoleView --> ResumeController
+
+ConsoleView *--> StartView
+ConsoleView *--> PlayView
+ConsoleView *--> ResumeView
+
+StartView --> StartController
+PlayView --> PlayController
+ResumeView --> ResumeController
+
+PlayView ..> PlayerView
+PlayerView --> PlayController
+
+@enduml

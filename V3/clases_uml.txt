@@ -1,0 +1,63 @@
+@startuml
+
+title A la logica también se le añaden las 3 propiedades correspondientes a los 3 controladores 
+
+abstract class TicTacToe {
+   #{abstract}createView(Logic logic): View
+   #play()
+}
+
+class View {
+}
+
+class ConsoleTicTacToe {
+
+}
+
+class Logic {
+}
+
+class Controller {
+   +getColor(coordinate): Color
+}
+
+TicTacToe <|-- ConsoleTicTacToe
+TicTacToe *--> Logic
+
+TicTacToe *--> Game: game
+TicTacToe *--> View: view
+TicTacToe *--> StartController
+TicTacToe *--> PlayController
+TicTacToe *--> ResumeController
+
+Controller <|-- StartController
+Controller <|-- PlayController
+Controller <|-- ResumeController
+
+Controller --> Game
+
+Logic --> Game
+
+Logic *--> StartController
+Logic *--> PlayController
+Logic *--> ResumeController
+
+ConsoleTicTacToe ..> ConsoleView
+
+View <|-- ConsoleView
+ConsoleView --> StartController
+ConsoleView --> PlayController
+ConsoleView --> ResumeController
+
+ConsoleView *--> StartView
+ConsoleView *--> PlayView
+ConsoleView *--> ResumeView
+
+StartView --> StartController
+PlayView --> PlayController
+ResumeView --> ResumeController
+
+PlayView ..> PlayerView
+PlayerView --> PlayController
+
+@enduml

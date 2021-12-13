@@ -1,0 +1,59 @@
+@startuml
+
+title Se añade propiedad logic a TicTacToe y se inicializa su objeto en el constructor
+
+abstract class TicTacToe {
+   #{abstract}createView(): View
+   #play()
+}
+
+class View {
+}
+
+class ConsoleTicTacToe {
+
+}
+
+class Logic {
+}
+
+class Controller {
+   +getColor(coordinate): Color
+}
+
+TicTacToe <|-- ConsoleTicTacToe
+TicTacToe *--> Logic
+
+TicTacToe *--> Game: game
+TicTacToe *--> View: view
+TicTacToe *--> StartController
+TicTacToe *--> PlayController
+TicTacToe *--> ResumeController
+
+Controller <|-- StartController
+Controller <|-- PlayController
+Controller <|-- ResumeController
+
+Logic --> Game
+
+Controller --> Game
+
+ConsoleTicTacToe ..> ConsoleView
+
+View <|-- ConsoleView
+ConsoleView --> StartController
+ConsoleView --> PlayController
+ConsoleView --> ResumeController
+
+ConsoleView *--> StartView
+ConsoleView *--> PlayView
+ConsoleView *--> ResumeView
+
+StartView --> StartController
+PlayView --> PlayController
+ResumeView --> ResumeController
+
+PlayView ..> PlayerView
+PlayerView --> PlayController
+
+@enduml

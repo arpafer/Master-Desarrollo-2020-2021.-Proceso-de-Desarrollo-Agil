@@ -1,0 +1,80 @@
+@startuml
+
+title En TicTacToe se eliminan las propiedades game y los controladores. Se deja solo la View y Logic
+
+abstract class TicTacToe {
+   #{abstract}createView(Logic logic): View
+   #play()
+}
+
+class View {
+}
+
+class ConsoleTicTacToe {
+
+}
+
+class Logic {
+   +getColor(coordinate)
+   +areAllTokensOnBoard()
+   +isTicTacToe()
+   +next()
+   +getActiveColor()
+   +putToken(coordinate)
+   +getPutTokenError(coordinate)
+   +moveToken(origin, target)
+   +getOriginMoveTokenError(coordinate)
+   +getTargetMoveTokenError(origin, target)
+   +reset()
+}
+
+class Controller {
+   +getColor(coordinate): Color
+}
+
+abstract class WithLogicView {
+   #Logic logic
+}
+
+class BoardView {
+   +write(StartController)
+   +write(Logic)
+}
+
+WithLogicView --> Logic
+WithLogicView <|-- PlayView
+WithLogicView <|-- StartView
+WithLogicView <|-- ResumeView
+WithLogicView <|-- PlayerView
+WithLogicView <|-- View
+
+TicTacToe <|-- ConsoleTicTacToe
+TicTacToe *--> Logic
+TicTacToe *--> View: view
+
+Controller <|-- StartController
+Controller <|-- PlayController
+Controller <|-- ResumeController
+
+Controller --> Game
+
+Logic --> Game
+
+Logic *--> StartController
+Logic *--> PlayController
+Logic *--> ResumeController
+
+ConsoleTicTacToe ..> ConsoleView
+
+View <|-- ConsoleView
+
+ConsoleView *--> StartView
+ConsoleView *--> PlayView
+ConsoleView *--> ResumeView
+
+
+PlayView ..> PlayerView
+
+StartView ..> BoardView
+
+@enduml

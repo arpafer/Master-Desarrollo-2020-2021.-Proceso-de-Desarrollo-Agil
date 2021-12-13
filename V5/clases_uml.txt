@@ -1,0 +1,81 @@
+@startuml
+
+title Creamos un constructor secundario en ConsoleView, View, StartView, PlayView, PlayerView y ResumeView para que acepten un objeto de la clase Logic
+
+abstract class TicTacToe {
+   #{abstract}createView(Logic logic): View
+   #play()
+}
+
+class View {
+}
+
+class ConsoleTicTacToe {
+
+}
+
+class Logic {
+   +getColor(coordinate)
+   +areAllTokensOnBoard()
+   +isTicTacToe()
+   +next()
+   +getActiveColor()
+   +putToken(coordinate)
+   +getPutTokenError(coordinate)
+   +moveToken(origin, target)
+   +getOriginMoveTokenError(coordinate)
+   +getTargetMoveTokenError(origin, target)
+   +reset()
+}
+
+class Controller {
+   +getColor(coordinate): Color
+}
+
+TicTacToe <|-- ConsoleTicTacToe
+TicTacToe *--> Logic
+
+TicTacToe *--> Game: game
+TicTacToe *--> View: view
+TicTacToe *--> StartController
+TicTacToe *--> PlayController
+TicTacToe *--> ResumeController
+
+Controller <|-- StartController
+Controller <|-- PlayController
+Controller <|-- ResumeController
+
+Controller --> Game
+
+Logic --> Game
+
+Logic *--> StartController
+Logic *--> PlayController
+Logic *--> ResumeController
+
+ConsoleTicTacToe ..> ConsoleView
+
+View <|-- ConsoleView
+ConsoleView --> StartController
+ConsoleView --> PlayController
+ConsoleView --> ResumeController
+
+ConsoleView *--> StartView
+ConsoleView *--> PlayView
+ConsoleView *--> ResumeView
+
+StartView --> StartController
+PlayView --> PlayController
+ResumeView --> ResumeController
+
+PlayView ..> PlayerView
+PlayerView --> PlayController
+PlayerView --> Logic
+
+View *--> Logic
+StartView *--> Logic
+PlayView *--> Logic
+ResumeView *--> Logic
+
+
+@enduml

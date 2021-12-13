@@ -1,0 +1,37 @@
+package usantatecla.tictactoe;
+
+import usantatecla.tictactoe.controllers.Logic;
+import usantatecla.tictactoe.controllers.PlayController;
+import usantatecla.tictactoe.controllers.ResumeController;
+import usantatecla.tictactoe.controllers.StartController;
+import usantatecla.tictactoe.models.Game;
+import usantatecla.tictactoe.views.View;
+
+abstract class TicTacToe {
+
+    private Game game;
+    private View view;
+    private Logic logic;
+    protected StartController startController;
+    protected PlayController playController;
+    protected ResumeController resumeController;
+
+    protected TicTacToe() {
+        this.game = new Game();
+        this.logic = new Logic(game);
+        this.startController = new StartController(this.game);
+        this.playController = new PlayController(this.game);
+        this.resumeController = new ResumeController(this.game);
+        this.view = this.createView(logic);
+    }
+
+    protected abstract View createView(Logic logic);
+
+    protected void play() {
+        do {
+            this.view.start();
+            this.view.play();
+        } while (this.view.resume());
+    }
+
+}
